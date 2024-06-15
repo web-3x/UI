@@ -54,6 +54,7 @@ const routes = [
   {
     path: "/Lottery",
     name: "Lottery",
+    meta: { auth: true },
     component: () => import("@/components/lottery/LotteryGame.vue"),
   },
   {
