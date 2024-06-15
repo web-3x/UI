@@ -1,17 +1,23 @@
 <script setup>
 import { ref } from "vue";
-
+import { useRoute } from "vue-router";
 import IconNoiti from "@/assets/images/icon/ico-notice.png";
 import IcNoitiActive from "@/assets/images/icon/ico-notice-active.png";
 import IconImage from "@/assets/images/icon/ico-img.png";
 import IcImageActive from "@/assets/images/icon/ico-img-active.png";
 import IconInfo from "@/assets/images/icon/ico-infoPp.png";
 import IcInfoActive from "@/assets/images/icon/ico-notice-active.png";
+import {detailGirls} from './index.js'
 
 const isActivetab = ref("info");
+const $route = useRoute();
 function onActivetab(index) {
   isActivetab.value = index;
 }
+const idUrl = $route.params.id
+const girls = detailGirls.filter((girl) => Number(idUrl) === girl.id) ?? []
+const detailGirl = girls.length > 0 ? girls[0] : {}
+
 </script>
 <template>
   <div class="nHome-detail">
@@ -27,7 +33,7 @@ function onActivetab(index) {
       </div>
     </div>
     <div class="detail-title">
-      [RE-UP] NGỌC EM GÁI DỄ THƯƠNG NỤ CƯỜI TỎA NẮNG MỚI VÀO NGHỀ
+      {{ detailGirl.name }}
     </div>
     <div style="display: flex">
       <div
@@ -52,7 +58,7 @@ function onActivetab(index) {
           alt=""
           class="detail-tabs-ico"
         />
-        images (6)
+        images ({{detailGirl.images.length }})
       </div>
       <div
         @click="onActivetab('reprot')"
@@ -64,7 +70,7 @@ function onActivetab(index) {
           alt=""
           class="detail-tabs-ico"
         />
-        reprot (20)
+        reprot ({{detailGirl.comments.length }})
       </div>
     </div>
     <div class="detail-content" v-if="isActivetab === 'info'">
@@ -75,14 +81,14 @@ function onActivetab(index) {
           lazy="loaded"
         >
           <img
-            src="@/assets/images/common/bgGirl.png"
+            :src="detailGirl.img"
             alt=""
             class="van-image__img"
             style="object-fit: cover"
           />
         </div>
         <div class="movie-list-n-lab">
-          Phan Đình Phùng, Phú Nhuận,Hồ Chí Minh, Vietnam
+          {{detailGirl.address}}
         </div>
       </div>
       <div class="movie-list-n-item-bottom">
@@ -118,7 +124,7 @@ function onActivetab(index) {
               alt=""
               class="movie-list-ico-money"
               style="width: 20px"
-            />350
+            />{{detailGirl.price}}
           </div>
           <div class="movie-list-addr">
             <img
@@ -126,7 +132,7 @@ function onActivetab(index) {
               alt=""
               class="movie-list-ico-addr"
             />
-            Phú Nhuận
+            {{detailGirl.city_name}}
           </div>
           <div class="movie-list-notice">
             <img
@@ -134,7 +140,7 @@ function onActivetab(index) {
               alt=""
               class="movie-list-ico-notice"
             />
-            1993-01-01
+            {{detailGirl.birthday}}
           </div>
         </div>
       </div>
@@ -146,31 +152,31 @@ function onActivetab(index) {
         </div>
         <div class="table-list">
           <div class="name">Năm sinh</div>
-          <div class="content">1993</div>
+          <div class="content">{{detailGirl.attributes[42]}}</div>
         </div>
         <div class="table-list">
           <div class="name">Cao (cm)</div>
-          <div class="content">156</div>
+          <div class="content">{{detailGirl.attributes[46]}}</div>
         </div>
         <div class="table-list">
           <div class="name">Nặng (kg)</div>
-          <div class="content">48</div>
+          <div class="content">{{detailGirl.attributes[48]}}</div>
         </div>
         <div class="table-list">
           <div class="name">Vòng 1 (cm)</div>
-          <div class="content">88</div>
+          <div class="content">{{detailGirl.attributes[49]}}</div>
         </div>
         <div class="table-list">
           <div class="name">Vòng 2 (cm)</div>
-          <div class="content">65</div>
+          <div class="content">{{detailGirl.attributes[50]}}</div>
         </div>
         <div class="table-list">
           <div class="name">Vòng 3 (cm)</div>
-          <div class="content">90</div>
+          <div class="content">{{detailGirl.attributes[51]}}</div>
         </div>
         <div class="table-list">
           <div class="name">Từ chối</div>
-          <div class="content">Say xỉn, đập đá, bạo dâm</div>
+          <div class="content">{{detailGirl.attributes[58]}}</div>
         </div>
       </div>
     </div>
@@ -178,11 +184,11 @@ function onActivetab(index) {
       <div class="tabs1">
         <div
           class="tabs1-img van-image"
-          src="@/assets/images/common/bgGirl.png"
           lazy="loaded"
+          v-for="img in detailGirl.images"
         >
           <img
-            src="@/assets/images/common/bgGirl.png"
+            :src="img"
             alt=""
             class="van-image__img"
             style="object-fit: cover"
@@ -194,13 +200,13 @@ function onActivetab(index) {
       <div class="table-title">Bình luận</div>
       <div class="comment">
         <div class="commentList">
-          <div class="commentList-content">
-            <!-- <img alt="" class="commentList-content-avatar" lazy="error" /> -->
+          <div class="commentList-content"  v-for="cmt in detailGirl.comments">
+             <img alt="" class="commentList-content-avatar" lazy="error" :src="cmt.avatar"/>
             <div style="width: 100%">
               <div>
-                <div class="commentList-content-name">Đăng Khôi</div>
+                <div class="commentList-content-name">{{ cmt.nickname }}</div>
                 <div class="commentList-content-txt">
-                  E thân thiện ,nói chuyện dễ thương làm tinh phê
+                  {{ cmt.message }}
                 </div>
               </div>
             </div>

@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from "vue";
-
+import { dataVideo } from "./index.js"
 const activeTab = ref(0);
 </script>
 <template>
@@ -15,16 +15,16 @@ const activeTab = ref(0);
         <div class="hot-recommend-div">
           <div class="van-list">
             <div class="list-item">
-              <a href="/PlayVideo" class="movie-list-item">
+              <a :href="`/PlayVideo/${video.id}`" class="movie-list-item"  v-for="video in dataVideo">
                 <div class="cover_img van-image van-image--round">
                   <img
-                    src="@/assets/images/common/bgGirl.png"
+                    :src="video.vod_pic"
                     class="van-image__img"
                   />
                 </div>
                 <div class="movie-list-item-bottom">
                   <div class="movie-time-div">
-                    <span>Gieo màu xanh xuống biển! </span><span>Chơi:242</span>
+                    <span>{{video.vod_name}} </span><span>{{video.vod_duration}}</span>
                   </div>
                 </div>
               </a>

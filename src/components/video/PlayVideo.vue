@@ -1,9 +1,30 @@
-<script setup>
+<script>
 import { ref } from "vue";
+import { useRoute } from "vue-router";
+import { dataVideo } from "./index.js"
+import videojs from 'video.js';
 
-const show = ref(true);
-const showPopup = () => {
-  show.value = true;
+export default {
+  setup() {
+    const show = ref(true);
+    const $route = useRoute();
+    const idUrl = $route.params.id
+    const currentVideo = dataVideo.filter((vid) => Number(idUrl) === vid.id)[0]
+    const showPopup = () => {
+      show.value = true;
+    };
+    const closePopup = () => {
+      show.value = false;
+    }
+
+    return {
+      showPopup,
+      currentVideo,
+      closePopup,
+      show,
+      dataVideo
+    };
+  }
 };
 
 </script>
@@ -19,42 +40,45 @@ const showPopup = () => {
           ></i>
         </div>
         <div class="van-nav-bar__title van-ellipsis">
-          Gieo màu xanh xuống biển!
+          {{currentVideo.vod_name}}
         </div>
       </div>
     </div>
-    <div class="movie-video">
+    <div class="movie-video" >
       <div
-        class="video-js noVip vjs-paused my-video-dimensions vjs-controls-enabled vjs-workinghover vjs-v7 vjs-user-inactive"
+        class="video-js noVip my-video-dimensions vjs-controls-enabled vjs-touch-enabled vjs-v7 vjs-has-started vjs-user-active vjs-paused"
         id="my-video"
       >
-        <!-- <video
+        <video
           id="my-video_html5_api"
           class="vjs-tech"
-          src="blob:https://canalis.vip/d222f00d-594f-48eb-84ee-fe3ae706b29c"
-        ></video> -->
+          preload="auto"
+          controls
+          :src="currentVideo.vod_play_url"
+        ></video>
+
       </div>
     </div>
     <div class="movie-content">
       <div class="movie-descript">
-        <p>Gieo màu xanh xuống biển!</p>
-        <span>242Lượt xem</span>
+        <p>{{currentVideo.vod_name}}</p>
+        <span>{{currentVideo.count}} Lượt xem</span>
       </div>
       <div class="movie-body">
         <div class="movie-title">
           <div><span>Xem thêm</span></div>
         </div>
         <div class="movie-list">
-          <div class="movie-play-item">
+          <div class="movie-play-item" v-for="vd in dataVideo">
             <div>
-              <img src="@/assets/images/common/bgGirl.png" />
+              <img :src="vd.vod_pic" />
               <div>
-                <div class="van-count-down">00:07:18</div>
+                <div class="van-count-down">{{vd.vod_duration}}</div>
               </div>
             </div>
             <div>
-              <p>Gieo màu xanh xuống biển!</p>
-              <span>242Lượt xem</span>
+              <p>{{vd.vod_name}}</p>
+              <span>{{vd.vod_score_num}} Lượt xem</span>
             </div>
           </div>
         </div>
@@ -65,7 +89,7 @@ const showPopup = () => {
   <van-popup class="errorMoney van-popup van-popup--center" v-model:show="show"
     ><div class="header">
       Xem video
-      <i class="close van-icon van-icon-cross"></i>
+      <i class="close van-icon van-icon-cross" @click="closePopup"></i>
     </div>
     <div class="content">
       Những người chưa hoàn thành bình chọn chỉ cung cấp bản dùng thử 15 giây,

@@ -47,8 +47,8 @@ const routes = [
     component: () => import("@/components/auth/Login.vue"),
   },
   {
-    path: "/HomeDetail",
-    name: "DetailGirl",
+    path: "/HomeDetail/:id",
+    name: "DetailGirl/:id",
     component: () => import("@/components/home/DetailGirl.vue"),
   },
   {
@@ -67,8 +67,8 @@ const routes = [
     component: () => import("@/components/home/ProfileOnList.vue"),
   },
   {
-    path: "/PlayVideo",
-    name: "PlayVideo",
+    path: "/PlayVideo/:id",
+    name: "PlayVideo/:id",
     component: () => import("@/components/video/PlayVideo.vue"),
   },
   {

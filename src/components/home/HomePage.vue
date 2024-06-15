@@ -1,9 +1,8 @@
 <script setup>
-import { ref } from "vue";
 
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { EffectCoverflow } from "swiper/modules";
-
+import { dataGirl, dataBoPhieu } from "./index.js"
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 </script>
@@ -82,6 +81,7 @@ import "swiper/css/effect-coverflow";
               to="/Lottery"
               class="van-grid-item"
               style="flex-basis: 25%"
+              v-for="bp in dataBoPhieu"
             >
               <div
                 class="van-grid-item__content van-grid-item__content--center"
@@ -89,51 +89,12 @@ import "swiper/css/effect-coverflow";
                 <div class="game_item_img van-image">
                   <img
                     class="van-image__img"
-                    src="@/assets/images/common/bgGirl.png"
+                    :src="bp.ico"
                   />
                 </div>
-                <span>BỎ PHIẾU 1</span>
+                <span>{{bp.name}}</span>
               </div>
             </router-link>
-            <div class="van-grid-item" style="flex-basis: 25%">
-              <div
-                class="van-grid-item__content van-grid-item__content--center"
-              >
-                <div class="game_item_img van-image">
-                  <img
-                    class="van-image__img"
-                    src="@/assets/images/common/bgGirl.png"
-                  />
-                </div>
-                <span>BỎ PHIẾU 2</span>
-              </div>
-            </div>
-            <div class="van-grid-item" style="flex-basis: 25%">
-              <div
-                class="van-grid-item__content van-grid-item__content--center"
-              >
-                <div class="game_item_img van-image">
-                  <img
-                    class="van-image__img"
-                    src="@/assets/images/common/bgGirl.png"
-                  />
-                </div>
-                <span>BỎ PHIẾU 3</span>
-              </div>
-            </div>
-            <div class="van-grid-item" style="flex-basis: 25%">
-              <div
-                class="van-grid-item__content van-grid-item__content--center"
-              >
-                <div class="game_item_img van-image">
-                  <img
-                    class="van-image__img"
-                    src="@/assets/images/common/bgGirl.png"
-                  />
-                </div>
-                <span>ĐẶC BIỆT</span>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -147,21 +108,21 @@ import "swiper/css/effect-coverflow";
           </div>
           <div role="feed" class="van-list">
             <div class="movie_list_n">
-              <router-link to="/HomeDetail" class="movie-list-n-item">
+              <router-link :to="`/HomeDetail/${girl.id}`" class="movie-list-n-item"  v-for="girl in dataGirl" :key="girl.id">
                 <div class="movie-list-n-title">
-                  Linh Anh ❤️ Siêu Dâm Ngoan - Nhiệt Tình Chiều Chuộng Hết Mình
+                  {{girl.name}}
                 </div>
                 <div class="movie-list-n-img">
                   <div class="movie-list-n-img van-image" lazy="loading">
                     <img
-                      src="@/assets/images/common/bgGirl.png"
+                      :src="girl.img"
                       alt=""
                       class="van-image__img"
                       style="object-fit: cover"
                     />
                   </div>
                   <div class="movie-list-n-lab">
-                    Chu Văn An, Bình Thạnh,Hồ Chí Minh, Vietnam
+                    {{girl.address}}
                   </div>
                 </div>
                 <div class="movie-list-n-item-bottomm">
@@ -197,7 +158,7 @@ import "swiper/css/effect-coverflow";
                         alt=""
                         class="movie-list-ico-notice"
                       />
-                      55
+                      {{ girl.comment_total }}
                     </div>
                     <div class="movie-list-addr">
                       <img
@@ -205,14 +166,14 @@ import "swiper/css/effect-coverflow";
                         alt=""
                         class="movie-list-ico-addr"
                       />
-                      Bình Thạnh
+                      {{ girl.city_name }}
                     </div>
                     <div class="movie-list-money">
                       <img
                         src="@/assets/images/icon/wallet.png"
                         alt=""
                         class="movie-list-ico-money"
-                      />300
+                      />{{ girl.price }}
                     </div>
                   </div>
                 </div>
@@ -225,4 +186,5 @@ import "swiper/css/effect-coverflow";
     </div>
   </div>
 </template>
-<style scoped></style>
+<style scoped>
+</style>
