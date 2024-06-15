@@ -18,6 +18,8 @@ const id = route.query.id;
 const amount = ref("");
 const isShowOrder = ref(false);
 const showResult = ref(false);
+const gameHistory = ref([]);
+
 const showPopupRs = () => {
   showResult.value = !showResult.value;
 };
@@ -60,61 +62,86 @@ io.on("game-info", (data) => {
   const { name, session, end } = data;
   Object.assign(gameInfo, { name, session, end });
   countDownTime.restart(end);
+  getGameHistory();
 });
 
 const toggleChoice = (idx) => {
   choices.value[idx].active = !choices.value[idx].active;
-  if(!choices.value[idx].active) {
+  if (!choices.value[idx].active) {
     choices.value[idx].amount = 0;
   }
 };
 
+const getGameHistory = () => {
+  const params = { page: 1, size: 20 };
+  handleRequest(axios.get(API.GAME_HISTORY + "/" + id, { params })).then(
+    (res) => {
+      if (res.success) {
+        gameHistory.value = res.data;
+      }
+    }
+  );
+};
 
 const submit = () => {
-  const cs = choices.value.filter(e => e.active)
-  if(cs.length === 0) return;
+  const cs = choices.value.filter((e) => e.active);
+  if (cs.length === 0) return;
   const data = {
     id,
-    choices: cs.map(e => {
+    choices: cs.map((e) => {
       return {
         id: e.id,
-        amount: Number(amount.value)
-      }
-    })
-  }
-  handleRequest(axios.post(API.ORDER, data)).then(res => {
-    if(res.success) {
-      showFailToast("Bình chọn thành công.")
+        amount: Number(amount.value),
+      };
+    }),
+  };
+  handleRequest(axios.post(API.ORDER, data)).then((res) => {
+    if (res.success) {
+      showFailToast("Bình chọn thành công.");
       amount.value = 0;
-      choices.value.forEach((e) => e.active = 0); 
+      choices.value.forEach((e) => (e.active = 0));
     } else {
-      showFailToast(res.message ?? "Lỗi bình chọn")
+      showFailToast(res.message ?? "Lỗi bình chọn");
     }
-  })
-}
+  });
+};
 const countChoices = computed(() => {
   return choices.value.filter((e) => e.active).length;
 });
 
 const totalAmount = computed(() => {
   return choices.value.reduce((prev, curr) => {
-    return prev + (curr.active ? amount.value : 0)
+    return prev + (curr.active ? amount.value : 0);
   }, 0);
 });
 
 const choicesText = computed(() => {
   const cs = choices.value.filter((e) => e.active);
-  if(cs.length) {
-    return cs.map(e => e.name).join(",")
+  if (cs.length) {
+    return cs.map((e) => e.name).join(",");
   }
-  return "Không được chọn"
+  return "Không được chọn";
 });
 
 watch(amount, (value) => {
-  choices.value.forEach(c => {
+  choices.value.forEach((c) => {
     c.amount = value;
   });
 });
+
+const formatResultText1 = (r) => {
+  const s = r.split(",").reduce((prev, curr) => {
+    return prev + (curr >> 0);
+  }, 0);
+
+  return s > 10 ? "IDOL 1" : "IDOL 2";
+};
+const formatResultText2 = (r) => {
+  const s = r.split(",").reduce((prev, curr) => {
+    return prev + (curr >> 0);
+  }, 0);
+  return s % 2 ? "IDOL 3" : "IDOL 4";
+};
 
 </script>
 <template>
@@ -153,9 +180,13 @@ watch(amount, (value) => {
         "
       ></div>
       <div class="recent" @click="showPopupRs">
-        <div class="kuaisan-ball left">
-          <span class="res-des middle">IDOL 2</span
-          ><span class="res-des middle">IDOL 4</span>
+        <div class="kuaisan-ball left" v-if="gameHistory[0]">
+          <span class="res-des middle">{{
+            formatResultText1(gameHistory[0]?.result)
+          }}</span
+          ><span class="res-des middle">{{
+            formatResultText2(gameHistory[0]?.result)
+          }}</span>
         </div>
         <i
           class="van-icon van-icon-arrow-down down"
@@ -274,8 +305,12 @@ watch(amount, (value) => {
                 <div class="left font-weight">Mã xếp hạng</div>
                 <div class="right font-weight">Kết quả xếp hạng</div>
               </div>
-              <div class="item">
-                <div class="left font-weight">202406103303</div>
+              <div
+                class="item"
+                v-for="(item, index) in gameHistory"
+                :key="index"
+              >
+                <div class="left font-weight">{{ item.session }}</div>
                 <div class="right font-weight">
                   <div
                     class="kuaisan-ball left"
@@ -285,8 +320,11 @@ watch(amount, (value) => {
                       margin-left: 40%;
                     "
                   >
-                    <span class="res-des middle">IDOL 2</span
-                    ><span class="res-des middle">IDOL 4</span>
+                    <span class="res-des middle"
+                      >{{ formatResultText1(item.result) }} </span
+                    ><span class="res-des middle"
+                      >{{ formatResultText2(item.result) }}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -315,6 +353,12 @@ watch(amount, (value) => {
   font-size: 1.867vw;
   line-height: 3.2vw;
   background-color: #fff;
+}
+.wrapper .item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 1.333vw 0;
 }
 .wrapper .item .kuaisan-ball .res-des.middle {
   width: auto;
