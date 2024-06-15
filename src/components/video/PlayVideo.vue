@@ -62,7 +62,6 @@ export default {
             @pause="processPause"
             :previewImageLink="currentVideo.vod_pic"
             :link="currentVideo.vod_play_url"
-            :progress="30"
             :isMuted="false"
             :isControls="true"
             class="vjs-tech"
