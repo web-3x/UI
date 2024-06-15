@@ -251,7 +251,7 @@ onMounted(() => {
   <div class="container page">
     <div class="nav-bar van-nav-bar van-hairline--bottom">
       <div class="van-nav-bar__content">
-        <div class="van-nav-bar__left" @click="router.go(-1)">
+        <div class="van-nav-bar__left" @click="$router.push('/mine')">
           <i
             class="van-icon van-icon-arrow-left"
             style="color: rgb(255, 255, 255)"
