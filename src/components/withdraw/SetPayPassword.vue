@@ -65,6 +65,7 @@ const submit = () => {
   
   handleRequest(axios.post(API.PASSWORD_WITHDRAW, { password })).then((res) => {
     if(res.success) {
+      userStore.updateUserInfo({ isSetPayPass: true });
       router.push("/BindCard")
     } else {
       showFailToast(res.message ?? "Lỗi đăng nhập")
@@ -82,7 +83,7 @@ onMounted(() => {
   <div class="container page">
     <div class="nav-bar van-nav-bar van-hairline--bottom">
       <div class="van-nav-bar__content">
-        <div @click="$router.go(-1)" class="van-nav-bar__left">
+        <div @click="$router.push('/mine')" class="van-nav-bar__left">
           <i
             class="van-icon van-icon-arrow-left"
             style="color: rgb(255, 255, 255)"
