@@ -56,7 +56,7 @@ const countDownTime = new CountDown(0, (hh, mm, ss, t) => {
 
 const io = socket();
 
-io.emit("join", id);
+io.emit("join", `game_${id}`);
 
 io.on("game-info", (data) => {
   const { name, session, end } = data;
