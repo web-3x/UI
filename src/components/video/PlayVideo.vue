@@ -2,7 +2,13 @@
 import { ref } from "vue";
 import { useRoute } from "vue-router";
 import { dataVideo } from "./index.js"
-import videojs from 'video.js';
+
+import { VideoPlayer } from 'vue-hls-video-player';
+
+function processPause(progress) {
+  console.log(progress)
+}
+
 
 export default {
   setup() {
@@ -24,7 +30,8 @@ export default {
       show,
       dataVideo
     };
-  }
+  },
+  components: { VideoPlayer }
 };
 
 </script>
@@ -49,13 +56,18 @@ export default {
         class="video-js noVip my-video-dimensions vjs-controls-enabled vjs-touch-enabled vjs-v7 vjs-has-started vjs-user-active vjs-paused"
         id="my-video"
       >
-        <video
-          id="my-video_html5_api"
-          class="vjs-tech"
-          preload="auto"
-          controls
-          :src="currentVideo.vod_play_url"
-        ></video>
+
+        <VideoPlayer
+            type="default"
+            @pause="processPause"
+            :previewImageLink="currentVideo.vod_pic"
+            :link="currentVideo.vod_play_url"
+            :progress="30"
+            :isMuted="false"
+            :isControls="true"
+            class="vjs-tech"
+            id="my-video_html5_api"
+        />
 
       </div>
     </div>
@@ -69,7 +81,7 @@ export default {
           <div><span>Xem thêm</span></div>
         </div>
         <div class="movie-list">
-          <div class="movie-play-item" v-for="vd in dataVideo">
+          <div class="movie-play-item" v-for="vd in dataVideo" :key="vd.id">
             <div>
               <img :src="vd.vod_pic" />
               <div>

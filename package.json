@@ -17,9 +17,9 @@
     "socket.io-client": "^4.7.5",
     "swiper": "^11.1.4",
     "vant": "^4.9.1",
-    "video.js": "^8.12.0",
     "videojs-contrib-hls": "^5.15.0",
     "vue": "^3.4.21",
+    "vue-hls-video-player": "^1.0.1",
     "vue-router": "^4.0.13"
   },
   "devDependencies": {
