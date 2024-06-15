@@ -56,7 +56,7 @@ const countDownTime = new CountDown(0, (hh, mm, ss, t) => {
 
 const io = socket();
 
-io.emit("join", `game_${id}`);
+io.emit("join", id);
 
 io.on("game-info", (data) => {
   const { name, session, end } = data;
@@ -134,6 +134,14 @@ watch(amount, (value) => {
   });
 });
 
+watch(countChoices, (newVal, oldVal) => {
+  if(newVal > 0 && oldVal == 0) {
+    isShowOrder.value = true;
+  } else if(newVal == 0 && oldVal > 0) {
+    isShowOrder.value = false;
+  }
+});
+
 const formatResultText1 = (r) => {
   const s = r.split(",").reduce((prev, curr) => {
     return prev + (curr >> 0);
@@ -153,7 +161,7 @@ const formatResultText2 = (r) => {
   <div class="container page">
     <div class="nav-bar van-nav-bar van-hairline--bottom">
       <div class="van-nav-bar__content">
-        <div @click="$router.go(-1)" class="van-nav-bar__left">
+        <div @click="$router.push('/Game')" class="van-nav-bar__left">
           <i
             class="van-icon van-icon-arrow-left"
             style="color: rgb(255, 255, 255)"
