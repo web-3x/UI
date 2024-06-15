@@ -1,11 +1,18 @@
 <script setup>
+import { computed } from "vue"
 import { showFailToast } from "vant";
 import { useUserStore } from "@/store/user";
 import { storeToRefs } from "pinia";
 import { formatNumber } from "@/helpers/format"
-// const router = useRouter();
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 const userStore = useUserStore();
 const { userInfo } = storeToRefs(userStore);
+
+const withdrawLink = computed(() => {
+  return userInfo.value.isSetBank ? "/withdraw" : "/Setbank";
+});
 
 </script>
 <template>
@@ -73,7 +80,7 @@ const { userInfo } = storeToRefs(userStore);
             ><span class="text">NẠP ĐIỂM</span>
           </router-link>
           <div class="line"></div>
-          <router-link to="/Setbank" class="finance-item">
+          <router-link :to="withdrawLink" class="finance-item">
             <i class="icon van-icon van-icon-idcard"></i
             ><span class="text">RÚT ĐIỂM</span>
           </router-link>

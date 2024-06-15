@@ -124,12 +124,12 @@ const routes = [
     meta: { auth: true },
     component: () => import("@/components/mine/Personalreport.vue"),
   },
-  {
-    path: "/RechargeRecord",
-    name: "RechargeRecord",
-    meta: { auth: true },
-    component: () => import("@/components/mine/RechargeRecord.vue"),
-  },
+  // {
+  //   path: "/RechargeRecord",
+  //   name: "RechargeRecord",
+  //   meta: { auth: true },
+  //   component: () => import("@/components/mine/RechargeRecord.vue"),
+  // },
   {
     path: "/GameRecord",
     name: "GameRecord",
@@ -171,6 +171,27 @@ const routes = [
     name: "SetPayPassword",
     meta: { auth: true },
     component: () => import("@/components/withdraw/SetPayPassword.vue"),
+  },
+
+  {
+    path: "/BindCard",
+    name: "BindCard",
+    meta: { auth: true },
+    component: () => import("@/components/withdraw/BindCard.vue"),
+  },
+
+  {
+    path: "/withdraw",
+    name: "withdraw",
+    meta: { auth: true },
+    component: () => import("@/components/withdraw/Withdraw.vue"),
+  },
+
+  {
+    path: "/WithdrawRecord",
+    name: "WithdrawRecord",
+    meta: { auth: true },
+    component: () => import("@/components/withdraw/WithdrawRecord.vue"),
   },
 
   {

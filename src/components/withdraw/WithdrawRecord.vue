@@ -40,7 +40,7 @@ const onRefresh = () => {
 
 const getData = async () => {
   const res = await handleRequest(
-    axios.get(API.TRANSACTION_HISTORY + "/" + "deposit", { params })
+    axios.get(API.TRANSACTION_HISTORY + "/" + "withdrawal", { params })
   );
   if (res.success) {
     params.page += 1;
@@ -63,9 +63,7 @@ onRefresh();
               style="color: rgb(255, 255, 255)"
             ></i>
           </div>
-          <div class="van-nav-bar__title van-ellipsis">
-            Lịch sử quy đổi điểm
-          </div>
+          <div class="van-nav-bar__title van-ellipsis">Hồ sơ rút điểm</div>
         </div>
       </div>
     </div>
@@ -78,7 +76,7 @@ onRefresh();
         loosing-text="Phát hiện có thể làm mới được"
         style="height: 100%; overflow: auto"
       >
-        <van-empty description="Dữ liệu trống" v-if="!list.length" />
+        <van-empty description="Dữ liệu trống" v-if="!list.length"/>
         <van-list
           v-else
           v-model:loading="loading"
