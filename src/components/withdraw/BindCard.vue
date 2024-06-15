@@ -1,11 +1,16 @@
 <script setup>
-import { reactive, ref } from "vue";
+import { reactive, ref, onMounted } from "vue";
 
 import axios from "@/axios";
 import API from "@/api";
 import { handleRequest } from "@/helpers/request";
 import { showFailToast, showToast } from "vant";
 import { useRouter } from "vue-router";
+import { useUserStore } from "@/store/user";
+import { storeToRefs } from "pinia";
+
+const userStore = useUserStore();
+const { userInfo } = storeToRefs(userStore);
 
 const router = useRouter();
 const showBankSelect = ref(false);
@@ -233,6 +238,12 @@ const submit = () => {
     }
   });
 };
+
+onMounted(() => {
+  if(!userInfo.value.isSetPayPass) {
+    router.push("/SetPayPassword")
+  }
+});
 
 </script>
 

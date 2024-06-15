@@ -1,11 +1,18 @@
 <script setup>
-import { ref, reactive } from "vue";
+import { ref, reactive, onMounted } from "vue";
 import { PasswordInput, NumberKeyboard } from "vant";
 import { showFailToast } from "vant";
+import { useUserStore } from "@/store/user";
+import { storeToRefs } from "pinia";
+import { useRouter } from "vue-router";
 
 import axios from "@/axios";
 import API from "@/api";
 import { handleRequest } from "@/helpers/request";
+
+const userStore = useUserStore();
+const { userInfo } = storeToRefs(userStore);
+const router = useRouter();
 
 const formData = reactive({
   password: "",
@@ -58,14 +65,18 @@ const submit = () => {
   
   handleRequest(axios.post(API.PASSWORD_WITHDRAW, { password })).then((res) => {
     if(res.success) {
-      userStore.login(res.data)
-      router.push("/mine")
+      router.push("/BindCard")
     } else {
       showFailToast(res.message ?? "Lỗi đăng nhập")
     }
   });
 };
 
+onMounted(() => {
+  if(userInfo.value.isSetPayPass) {
+    router.push("/BindCard")
+  }
+});
 </script>
 <template>
   <div class="container page">
