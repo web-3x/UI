@@ -15,7 +15,7 @@ const userStore = useUserStore();
 const { userInfo } = storeToRefs(userStore);
 
 const formData = reactive({
-  fullname: userInfo.value?.fullname,
+  fullname: userInfo?.value?.fullname,
 });
 
 const showPassword = ref(false);

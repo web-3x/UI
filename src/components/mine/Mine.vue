@@ -11,7 +11,7 @@ const userStore = useUserStore();
 const { userInfo } = storeToRefs(userStore);
 
 const withdrawLink = computed(() => {
-  return userInfo.value.isSetBank ? "/withdraw" : "/Setbank";
+  return userInfo?.value?.isSetBank ? "/withdraw" : "/Setbank";
 });
 
 </script>
