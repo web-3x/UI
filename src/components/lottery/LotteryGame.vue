@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive, computed, watch } from "vue";
+import { ref, reactive, computed, watch, onUnmounted } from "vue";
 import socket from "@/socket";
 import { useRoute } from "vue-router";
 import CountDown from "@/helpers/CountDown";
@@ -64,6 +64,11 @@ io.on("game-info", (data) => {
   countDownTime.restart(end);
   getGameHistory();
 });
+
+
+onUnmounted(() => {
+  io.disconnect();
+})
 
 const toggleChoice = (idx) => {
   choices.value[idx].active = !choices.value[idx].active;
