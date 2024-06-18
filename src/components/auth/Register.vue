@@ -79,12 +79,13 @@ function submitForm() {
                 <div class="van-field__body">
                   <input
                     v-model="formData.password"
-                    type="password"
+                    :type="!showPassword ? 'password': 'text'"
                     placeholder="Vui lòng nhập mật khẩu đăng nhập"
                     class="van-field__control van-field__control--center"
                   />
                   <div class="van-field__right-icon">
-                    <i class="van-icon van-icon-closed-eye"></i>
+                    <van-icon name="closed-eye" v-if="!showPassword" @click="showPassword = !showPassword"/>
+                    <van-icon name="eye-o" v-else @click="showPassword = !showPassword"/>
                   </div>
                 </div>
               </div>
