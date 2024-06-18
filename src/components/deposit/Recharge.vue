@@ -43,7 +43,7 @@ const submit = () => {
         <p class="value">{{ formatNumber(userInfo?.money) }}Đ</p>
       </div>
       <div class="content recharge">
-        <form class="van-form" @click.prevent="submit">
+        <form class="van-form" @submit.prevent="submit">
           <div class="form-item">
             <div class="form-item-title">Vui lòng nhập số tiền nạp</div>
             <div>
