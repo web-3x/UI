@@ -1,19 +1,26 @@
 <script setup>
-import { computed } from "vue"
-import { showFailToast } from "vant";
+import { ref, computed } from "vue";
+import { showFailToast, ImagePreview } from "vant";
 import { useUserStore } from "@/store/user";
 import { storeToRefs } from "pinia";
-import { formatNumber } from "@/helpers/format"
+import { formatNumber } from "@/helpers/format";
 import { useRouter } from "vue-router";
+
+import VipTableImage from "@/assets/images/common/vip-table.jpg";
 
 const router = useRouter();
 const userStore = useUserStore();
-const { userInfo } = storeToRefs(userStore);
+const { userInfo, isLogin } = storeToRefs(userStore);
+
+const showVipTable = ref(false);
 
 const withdrawLink = computed(() => {
   return userInfo?.value?.isSetBank ? "/withdraw" : "/Setbank";
 });
 
+const vipImgeSrc = computed(() => {
+  return `/vip/vip${userInfo?.value?.vip ?? 1}.png`;
+});
 </script>
 <template>
   <div class="mine page">
@@ -40,37 +47,53 @@ const withdrawLink = computed(() => {
           </div>
         </div>
         <div class="user-wrapper">
-          <div class="user_img van-image van-image--round">
-            <img
-              class="van-image__img"
-              src="@/assets/images/common/bgGirl.png"
-            />
-          </div>
-          <div class="login-content">
-            <p class="login-btn" style="margin: 19.1833px 0">
-              {{ userInfo?.username }}
+          <template v-if="isLogin">
+            <div class="user_img van-image van-image--round">
               <img
-                src="@/assets/images/common/vip1.png"
-                alt=""
-                class="login-vip"
+                class="van-image__img"
+                src="@/assets/images/common/bgGirl.png"
               />
-            </p>
-            <div class="login-label" style="margin: 13.4333px 0">
-              <div class="van-progress" style="height: 8px">
-                <span
-                  class="van-progress__portion"
-                  style="
-                    background: linear-gradient(
-                      270deg,
-                      rgb(194, 68, 145),
-                      rgb(119, 95, 217)
-                    );
-                    width: 14.7px;
-                  "
-                ></span>
+            </div>
+            <div class="login-content">
+              <p class="login-btn" style="margin: 19.1833px 0">
+                {{ userInfo?.username }}
+                <img
+                  @click="showVipTable = true"
+                  :src="vipImgeSrc"
+                  alt=""
+                  class="login-vip"
+                />
+              </p>
+              <div class="login-label" style="margin: 13.4333px 0">
+                <div class="van-progress" style="height: 8px">
+                  <span
+                    class="van-progress__portion"
+                    style="
+                      background: linear-gradient(
+                        270deg,
+                        rgb(194, 68, 145),
+                        rgb(119, 95, 217)
+                      );
+                      width: 14.7px;
+                    "
+                  ></span>
+                </div>
               </div>
             </div>
-          </div>
+          </template>
+          <template v-else>
+            <div class="user-wrapper">
+              <div class="user_img van-image van-image--round">
+                <img
+                  src="@/assets/images/common/avatar.png"
+                  class="van-image__img"
+                />
+              </div>
+              <div class="login-content" @click="$router.push('/Login')">
+                <p class="login-btn">Đăng nhập Đăng ký</p>
+              </div>
+            </div>
+          </template>
         </div>
       </div>
       <div class="content">
@@ -92,7 +115,9 @@ const withdrawLink = computed(() => {
             ><i class="font-gray van-icon van-icon-arrow" style=""></i>
           </router-link>
           <div class="part-2">
-            <p class="balance van-ellipsis" style="font-size: 24px">{{ formatNumber(userInfo?.money ?? 0) }} Đ</p>
+            <p class="balance van-ellipsis" style="font-size: 24px">
+              {{ formatNumber(userInfo?.money ?? 0) }} Đ
+            </p>
             <span class="font-28 font-gray" style="font-size: 14px"
               >(100 Đ=100,000 VND)</span
             >
@@ -168,10 +193,22 @@ const withdrawLink = computed(() => {
         </div>
       </div>
     </div>
+    <van-image-preview v-model:show="showVipTable" :images="[VipTableImage]">
+    </van-image-preview>
   </div>
 </template>
 <style scoped>
 a {
   color: black;
+}
+
+:deep(.van-image-preview) {
+  top: 50%;
+  left: 50%;
+  background: transparent;
+}
+
+:deep(.van-image-preview__overlay) {
+  background: rgba(0, 0, 0, 0.9);
 }
 </style>
