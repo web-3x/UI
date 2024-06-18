@@ -4,8 +4,10 @@ import socket from "@/socket";
 import { useRoute, useRouter } from "vue-router";
 import CountDown from "@/helpers/CountDown";
 import { formatNumber } from "@/helpers/format";
-
+import { useUserStore } from "@/store/user";
+import { storeToRefs } from "pinia";
 import { showFailToast } from "vant";
+import { Popup } from "vant";
 
 import axios from "@/axios";
 import API from "@/api";
@@ -14,14 +16,19 @@ import { handleRequest } from "@/helpers/request";
 const route = useRoute();
 const router = useRouter();
 
+const userStore = useUserStore();
+const { userInfo } = storeToRefs(userStore);
+
 const id = route.query.id;
 
-if(!id) {
-  router.push('/Game')
+if (!id) {
+  router.push("/Game");
 }
 
 const amount = ref("");
 const isShowOrder = ref(false);
+const isShowConfirmOrder = ref(false);
+
 const showResult = ref(false);
 const gameHistory = ref([]);
 
@@ -49,6 +56,9 @@ const choices = ref([
   { id: "4", name: "IDOL 4", active: false },
 ]);
 
+const choicesSelected = computed(() => {
+  return choices.value.filter((e) => e.active);
+});
 const hhmmss = computed(() => {
   return `${String(countDown.hh).padStart(2, "0")}:${String(
     countDown.mm
@@ -62,8 +72,8 @@ const countDownTime = new CountDown(0, (hh, mm, ss, t) => {
 const io = socket();
 
 io.emit("join", id, (data) => {
-  if(data.success == 0) {
-    router.push('/Game')
+  if (data.success == 0) {
+    router.push("/Game");
   }
 });
 
@@ -74,12 +84,13 @@ io.on("game-info", (data) => {
   getGameHistory();
 });
 
-
 onUnmounted(() => {
   io.disconnect();
-})
+});
 
-const toggleChoice = (idx) => {
+const toggleChoice = (id) => {
+  const idx = choices.value.findIndex(e => e.id === id);
+  if(idx === -1) return;
   choices.value[idx].active = !choices.value[idx].active;
   if (!choices.value[idx].active) {
     choices.value[idx].amount = 0;
@@ -97,12 +108,22 @@ const getGameHistory = () => {
   );
 };
 
+const confirmOrder = () => {
+  if (choicesSelected.value.length === 0) {
+    return showFailToast("Hãy chọn 1 con số");
+  }
+
+  if (!amount.value) {
+    return showFailToast("Vui lòng nhập số tiền.");
+  }
+
+  isShowConfirmOrder.value = true;
+};
+
 const submit = () => {
-  const cs = choices.value.filter((e) => e.active);
-  if (cs.length === 0) return;
   const data = {
     id,
-    choices: cs.map((e) => {
+    choices: choicesSelected.value.map((e) => {
       return {
         id: e.id,
         amount: Number(amount.value),
@@ -111,7 +132,7 @@ const submit = () => {
   };
   handleRequest(axios.post(API.ORDER, data)).then((res) => {
     if (res.success) {
-      showFailToast("Bình chọn thành công.");
+      showFailToast("Thành công");
       amount.value = 0;
       choices.value.forEach((e) => (e.active = 0));
     } else {
@@ -120,19 +141,18 @@ const submit = () => {
   });
 };
 const countChoices = computed(() => {
-  return choices.value.filter((e) => e.active).length;
+  return choicesSelected.value.length;
 });
 
 const totalAmount = computed(() => {
-  return choices.value.reduce((prev, curr) => {
-    return prev + (curr.active ? amount.value : 0);
+  return choicesSelected.value.reduce((prev, curr) => {
+    return prev + amount.value;
   }, 0);
 });
 
 const choicesText = computed(() => {
-  const cs = choices.value.filter((e) => e.active);
-  if (cs.length) {
-    return cs.map((e) => e.name).join(",");
+  if (choicesSelected.value.length) {
+    return choicesSelected.value.map((e) => e.name).join(",");
   }
   return "Không được chọn";
 });
@@ -144,10 +164,11 @@ watch(amount, (value) => {
 });
 
 watch(countChoices, (newVal, oldVal) => {
-  if(newVal > 0 && oldVal == 0) {
+  if (newVal > 0 && oldVal == 0) {
     isShowOrder.value = true;
-  } else if(newVal == 0 && oldVal > 0) {
+  } else if (newVal == 0 && oldVal > 0) {
     isShowOrder.value = false;
+    isShowConfirmOrder.value = false;
   }
 });
 
@@ -164,7 +185,6 @@ const formatResultText2 = (r) => {
   }, 0);
   return s % 2 ? "IDOL 3" : "IDOL 4";
 };
-
 </script>
 <template>
   <div class="container page">
@@ -238,7 +258,7 @@ const formatResultText2 = (r) => {
               :class="{ active: c.active }"
               v-for="(c, idx) in choices"
               :key="idx"
-              @click="toggleChoice(idx)"
+              @click="toggleChoice(c.id)"
             >
               <div class="wrapper">
                 <div class="content">
@@ -263,10 +283,11 @@ const formatResultText2 = (r) => {
               <span class="text">Số dư khả dụng</span>
             </div>
             <div>
-              <span class="text num">0</span><span class="text">Đ</span>
+              <span class="text num">{{ formatNumber(userInfo.money) }}</span
+              ><span class="text">Đ</span>
             </div>
           </div>
-          <div class="right" @click="submit">Xác nhận</div>
+          <div class="right" @click="confirmOrder">Xác nhận</div>
         </div>
         <div class="wrapper" :class="isShowOrder === true ? 'active' : ''">
           <div class="item">
@@ -356,6 +377,32 @@ const formatResultText2 = (r) => {
       </van-popup>
     </div>
   </div>
+    <van-popup v-model:show="isShowConfirmOrder">
+      <div class="confirm-order-modal">
+        <div class="head van-hairline--bottom">
+          <p class="text" style="margin: 1em">Bình chọn</p>
+        </div>
+        <ul class="list">
+          <li
+            class="lise-item van-hairline--bottom"
+            v-for="(item, index) in choicesSelected"
+            :key="index"
+          >
+            <div class="main">
+              <p class="bet-name">{{ item.name }}</p>
+              <p class="detail-text">
+                1ĐặtX{{ item.amount }}Đ={{ item.amount }}Đ
+              </p>
+            </div>
+            <van-icon name="close" @click="toggleChoice(item.id)"/>
+          </li>
+        </ul>
+        <div class="sub-bar">
+          <van-button type="default" class="item" color="#979799" plain>Hủy bình chọn</van-button>
+          <van-button type="default" class="item" color='linear-gradient(270deg, #c24491, #775fd9)'>Xác nhận</van-button>
+        </div>
+      </div>
+    </van-popup>
 </template>
 <style scoped>
 .van-cell {
@@ -389,4 +436,9 @@ const formatResultText2 = (r) => {
 .rectangle.active .content {
   background: transparent;
 }
+
+.lise-item .main p {
+  margin: 1em 0;
+}
+
 </style>

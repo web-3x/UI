@@ -1913,7 +1913,7 @@ body .van-toast .van-toast__icon {
 }
 
 .van-button__text {
-  color: #fff !important;
+  /* color: #fff !important; */
 }
 
 .van-radio__icon {
