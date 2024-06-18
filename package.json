@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@vant/touch-emulator": "^1.4.0",
     "axios": "^1.7.2",
     "jsonwebtoken": "^9.0.2",
     "moment": "^2.30.1",
