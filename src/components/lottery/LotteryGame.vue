@@ -406,7 +406,7 @@ const formatResultText2 = (r) => {
           </li>
         </ul>
         <div class="sub-bar">
-          <van-button type="default" class="item" color="#979799" plain @click="cancelOrder">Hủy bình chọn</van-button>
+          <van-button type="default" class="item cancel-btn" color="#979799" plain @click="cancelOrder">Hủy bình chọn</van-button>
           <van-button type="default" class="item" color='linear-gradient(270deg, #c24491, #775fd9)' @click="submit">Xác nhận</van-button>
         </div>
       </div>
@@ -447,6 +447,10 @@ const formatResultText2 = (r) => {
 
 .lise-item .main p {
   margin: 1em 0;
+}
+
+.cancel-btn :deep(.van-button__text) {
+  color: currentColor !important;
 }
 
 </style>
