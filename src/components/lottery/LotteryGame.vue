@@ -1,7 +1,7 @@
 <script setup>
 import { ref, reactive, computed, watch, onUnmounted } from "vue";
 import socket from "@/socket";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import CountDown from "@/helpers/CountDown";
 import { formatNumber } from "@/helpers/format";
 
@@ -12,8 +12,13 @@ import API from "@/api";
 import { handleRequest } from "@/helpers/request";
 
 const route = useRoute();
+const router = useRouter();
 
 const id = route.query.id;
+
+if(!id) {
+  router.push('/Game')
+}
 
 const amount = ref("");
 const isShowOrder = ref(false);
@@ -56,7 +61,11 @@ const countDownTime = new CountDown(0, (hh, mm, ss, t) => {
 
 const io = socket();
 
-io.emit("join", id);
+io.emit("join", id, (data) => {
+  if(data.success == 0) {
+    router.push('/Game')
+  }
+});
 
 io.on("game-info", (data) => {
   const { name, session, end } = data;
