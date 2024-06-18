@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from "vue";
+import { listAddress } from './address.js'
 
 const activeTab = ref(0);
 </script>
@@ -20,9 +21,8 @@ const activeTab = ref(0);
             lễ tân sẽ lập tức sắp xếp.
           </div>
           <div class="address">
-            <van-cell-group>
-              <van-cell title="AN GIANG" to="/list" />
-              <van-cell title="BÌNH ĐỊNH" />
+            <van-cell-group v-for="add in listAddress">
+              <van-cell :title="add.name" :to="`/list/${add.id}`" />
             </van-cell-group>
           </div>
         </van-tab>

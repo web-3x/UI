@@ -58,13 +58,13 @@ const routes = [
     component: () => import("@/components/lottery/LotteryGame.vue"),
   },
   {
-    path: "/list",
-    name: "List",
+    path: "/list/:id",
+    name: "List/:id",
     component: () => import("@/components/home/List.vue"),
   },
   {
-    path: "/ProfileOnList",
-    name: "ProfileOnList",
+    path: "/ProfileOnList/:idAdd/:idGirl",
+    name: "ProfileOnList/:idAdd/:idGirl",
     component: () => import("@/components/home/ProfileOnList.vue"),
   },
   {

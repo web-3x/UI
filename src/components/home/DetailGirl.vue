@@ -9,10 +9,10 @@ import IconInfo from "@/assets/images/icon/ico-infoPp.png";
 import IcInfoActive from "@/assets/images/icon/ico-notice-active.png";
 import {detailGirls} from './index.js'
 
-const isActivetab = ref("info");
+const isActiveTab = ref("info");
 const $route = useRoute();
-function onActivetab(index) {
-  isActivetab.value = index;
+function onActiveTab(index) {
+  isActiveTab.value = index;
 }
 const idUrl = $route.params.id
 const girls = detailGirls.filter((girl) => Number(idUrl) === girl.id) ?? []
@@ -37,43 +37,43 @@ const detailGirl = girls.length > 0 ? girls[0] : {}
     </div>
     <div style="display: flex">
       <div
-        @click="onActivetab('info')"
+        @click="onActiveTab('info')"
         class="detail-tabs"
-        :class="isActivetab === 'info' ? 'active' : ''"
+        :class="isActiveTab === 'info' ? 'active' : ''"
       >
         <img
-          :src="isActivetab === 'info' ? IconInfo : IcInfoActive"
+          :src="isActiveTab === 'info' ? IconInfo : IcInfoActive"
           alt=""
           class="detail-tabs-ico"
         />
         info
       </div>
       <div
-        @click="onActivetab('image')"
+        @click="onActiveTab('image')"
         class="detail-tabs"
-        :class="isActivetab === 'image' ? 'active' : ''"
+        :class="isActiveTab === 'image' ? 'active' : ''"
       >
         <img
-          :src="isActivetab === 'image' ? IconImage : IcImageActive"
+          :src="isActiveTab === 'image' ? IconImage : IcImageActive"
           alt=""
           class="detail-tabs-ico"
         />
         images ({{detailGirl.images.length }})
       </div>
       <div
-        @click="onActivetab('reprot')"
+        @click="onActiveTab('reprot')"
         class="detail-tabs"
-        :class="isActivetab === 'reprot' ? 'active' : ''"
+        :class="isActiveTab === 'reprot' ? 'active' : ''"
       >
         <img
-          :src="isActivetab === 'reprot' ? IconNoiti : IcNoitiActive"
+          :src="isActiveTab === 'reprot' ? IconNoiti : IcNoitiActive"
           alt=""
           class="detail-tabs-ico"
         />
         reprot ({{detailGirl.comments.length }})
       </div>
     </div>
-    <div class="detail-content" v-if="isActivetab === 'info'">
+    <div class="detail-content" v-if="isActiveTab === 'info'">
       <div class="movie-list-n-img">
         <div
           class="movie-list-n-img van-image"
@@ -180,7 +180,7 @@ const detailGirl = girls.length > 0 ? girls[0] : {}
         </div>
       </div>
     </div>
-    <div class="detail-content" v-if="isActivetab === 'image'">
+    <div class="detail-content" v-if="isActiveTab === 'image'">
       <div class="tabs1">
         <div
           class="tabs1-img van-image"
@@ -196,7 +196,7 @@ const detailGirl = girls.length > 0 ? girls[0] : {}
         </div>
       </div>
     </div>
-    <div class="detail-content" v-if="isActivetab === 'reprot'">
+    <div class="detail-content" v-if="isActiveTab === 'reprot'">
       <div class="table-title">Bình luận</div>
       <div class="comment">
         <div class="commentList">

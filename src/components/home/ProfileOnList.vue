@@ -1,3 +1,17 @@
+<script setup>
+import { useRoute } from "vue-router";
+import { listGirlByAddress } from './address.js'
+
+const $route = useRoute();
+
+const idAdd = $route.params.idAdd
+const idGirl= $route.params.idGirl
+
+const dataGirl = listGirlByAddress.filter((add) => add.id === Number(idAdd))[0].data.filter((girl) => girl.id === Number(idGirl))[0]
+
+
+</script>
+
 <template>
   <div class="page">
     <div class="nav-bar van-nav-bar van-hairline--bottom">
@@ -12,13 +26,14 @@
       </div>
     </div>
     <div class="box">
-      <p class="name">A01</p>
+      <p class="name">{{dataGirl.vn_vn}}</p>
       <p class="title"></p>
       <van-image
+        v-for="girl in dataGirl.img_url"
         width="98%"
         height="100%"
         fit="contain"
-        src="src/assets/images/common/bgGirl.png"
+        :src="girl"
       />
 
       <button
