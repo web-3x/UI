@@ -120,6 +120,13 @@ const confirmOrder = () => {
   isShowConfirmOrder.value = true;
 };
 
+const cancelOrder = () => {
+  choices.value.forEach((c) => {
+    c.active = false
+  });
+  amount.value = ""
+}
+
 const submit = () => {
   const data = {
     id,
@@ -135,6 +142,7 @@ const submit = () => {
       showFailToast("Thành công");
       amount.value = 0;
       choices.value.forEach((e) => (e.active = 0));
+      isShowConfirmOrder.value = false;
     } else {
       showFailToast(res.message ?? "Lỗi bình chọn");
     }
@@ -398,8 +406,8 @@ const formatResultText2 = (r) => {
           </li>
         </ul>
         <div class="sub-bar">
-          <van-button type="default" class="item" color="#979799" plain>Hủy bình chọn</van-button>
-          <van-button type="default" class="item" color='linear-gradient(270deg, #c24491, #775fd9)'>Xác nhận</van-button>
+          <van-button type="default" class="item" color="#979799" plain @click="cancelOrder">Hủy bình chọn</van-button>
+          <van-button type="default" class="item" color='linear-gradient(270deg, #c24491, #775fd9)' @click="submit">Xác nhận</van-button>
         </div>
       </div>
     </van-popup>
