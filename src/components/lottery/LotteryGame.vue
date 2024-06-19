@@ -214,7 +214,7 @@ GameInfo();
   <div class="container page">
     <div class="nav-bar van-nav-bar van-hairline--bottom">
       <div class="van-nav-bar__content">
-        <div @click="$router.push('/Game')" class="van-nav-bar__left">
+        <div @click="$router.push('/')" class="van-nav-bar__left">
           <i
             class="van-icon van-icon-arrow-left"
             style="color: rgb(255, 255, 255)"
@@ -285,7 +285,7 @@ GameInfo();
             >
               <div class="wrapper">
                 <div class="content">
-                  <p class="name-text large">{{ c.name }}</p>
+                  <p class="name-text large" style="color: #c24491;">{{ c.name }}</p>
                 </div>
               </div>
             </div>
@@ -478,4 +478,5 @@ GameInfo();
 .cancel-btn :deep(.van-button__text) {
   color: currentColor !important;
 }
+
 </style>
