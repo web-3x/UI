@@ -16,7 +16,7 @@ const submit = () => {
   if (amount.value > 0) {
     router.push({ name: "Channel", query: { money: amount.value } });
   } else {
-    showFailToast("Số tiền sai");
+    showFailToast("Số điểm sai");
   }
 };
 </script>
@@ -45,7 +45,7 @@ const submit = () => {
       <div class="content recharge">
         <form class="van-form" @submit.prevent="submit">
           <div class="form-item">
-            <div class="form-item-title">Vui lòng nhập số tiền nạp</div>
+            <div class="form-item-title">Vui lòng nhập số điểm nạp</div>
             <div>
               <div
                 class="van-cell van-field"
@@ -59,7 +59,7 @@ const submit = () => {
                       v-model.number="amount"
                       type="text"
                       name="money"
-                      placeholder="Vui lòng nhập số tiền nạp"
+                      placeholder="Vui lòng nhập số điểm nạp"
                       class="van-field__control"
                       style="color: #323233"
                     />

@@ -21,14 +21,14 @@ const formData = reactive({
 
 const submit = () => {
   if (isNaN(formData.amount) || formData.amount <= 0) {
-   return showFailToast("Vui lòng điền số tiền chính xác.");
+   return showFailToast("Vui lòng điền số điểm chính xác.");
   }
   if (!formData.password_withdraw) {
-   return showFailToast("Vui lòng nhập mật khẩu rút tiền");
+   return showFailToast("Vui lòng nhập mật khẩu rút");
   }
   handleRequest(axios.post(API.TRANSACTION_WITHDRAW, formData)).then((res) => {
     if (res.success) {
-      showFailToast("Rút tiền thành công.");
+      showFailToast("Rút thành công.");
       router.push("/mine");
     } else {
       showFailToast(res.message ?? "Lỗi");

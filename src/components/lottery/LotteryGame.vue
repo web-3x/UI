@@ -114,7 +114,7 @@ const confirmOrder = () => {
   }
 
   if (!amount.value) {
-    return showFailToast("Vui lòng nhập số tiền.");
+    return showFailToast("Vui lòng nhập số điểm.");
   }
 
   isShowConfirmOrder.value = true;
@@ -320,7 +320,7 @@ const formatResultText2 = (r) => {
                       v-model.number="amount"
                       type="number"
                       inputmode="numeric"
-                      placeholder="Vui lòng nhập số tiền"
+                      placeholder="Vui lòng nhập số điểm"
                       class="van-field__control"
                     />
                   </div>

@@ -27,7 +27,7 @@ const { userInfo } = storeToRefs(userStore);
         <p class="title">Số lượng nhiệm vụ(Đ)</p>
         <p class="value">{{ formatNumber(userInfo.money) }}Đ</p>
         <p class="tip">
-          Công thức tính lợi nhuận: số tiền thắng - số tiền nhiệm vụ
+          Công thức tính lợi nhuận: số điểm thắng - số điểm nhiệm vụ
         </p>
       </div>
       <div class="content">
@@ -39,7 +39,7 @@ const { userInfo } = storeToRefs(userStore);
           </div>
           <div class="datalistitem">
             <div class="datalistitemValue">{{ formatNumber(userInfo?.moneyDeposit ?? 0) }}Đ</div>
-            <div class="datalistitemKey">Số tiền nạp</div>
+            <div class="datalistitemKey">Số điểm nạp</div>
             <div class="datalistitemRightLine"></div>
           </div>
           <div class="datalistitem">
@@ -49,7 +49,7 @@ const { userInfo } = storeToRefs(userStore);
           </div>
           <div class="datalistitem">
             <div class="datalistitemValue">{{ formatNumber(userInfo?.moneyWin ?? 0) }}Đ</div>
-            <div class="datalistitemKey">Số tiền chiến thắng</div>
+            <div class="datalistitemKey">Số điểm chiến thắng</div>
             <div class="datalistitemRightLine"></div>
           </div>
         </div>

@@ -1,22 +1,20 @@
 <script setup>
-const games = [
-  {
-    id: 1,
-    name: "BỎ PHIẾU 1",
-  },
-  {
-    id: 2,
-    name: "BỎ PHIẾU 2",
-  },
-  {
-    id: 3,
-    name: "BỎ PHIẾU 3",
-  },
-  {
-    id: 4,
-    name: "ĐẶC BIỆT",
-  },
-];
+import { ref } from "vue";
+import axios from "@/axios";
+import API from "@/api";
+import { handleRequest } from "@/helpers/request";
+
+const games = ref([]);
+const getGameList = () => {
+  handleRequest(axios.get(API.PRODUCT_LIST)).then((res) => {
+    if (res.success) {
+      games.value = res.data;
+    }
+  });
+};
+
+getGameList();
+
 </script>
 
 <template>

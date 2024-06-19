@@ -107,7 +107,7 @@ onRefresh();
               <span style="color: rgb(7, 193, 96)"></span>
             </div>
             <div class="time topInfoSp">
-              <span>Số tiền đặt cược：{{ formatNumber(item.amount )}} Đ</span>
+              <span>Số điểm đặt cược：{{ formatNumber(item.amount )}} Đ</span>
             </div>
             <div class="time">
               <span>Thời gian phục vụ：{{ formatDateTime(item.createdAt) }}</span>

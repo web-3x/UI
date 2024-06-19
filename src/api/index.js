@@ -14,7 +14,9 @@ export default {
   // user
   USER_INFO: "/user/info",
   USER_SET_FULLNAME: "/user/set-fullname",
-
+  USER_SET_GENDER: "/user/set-gender",
+  USER_MONEY_LOGS: "user/money-logs",
+  
   // game
   GAME_INFO: "/product/info",
   GAME_HISTORY: "/game/result-history",

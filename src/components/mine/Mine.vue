@@ -6,12 +6,18 @@ import { storeToRefs } from "pinia";
 import { formatNumber } from "@/helpers/format";
 import { useRouter } from "vue-router";
 
+import axios from "@/axios";
+import API from "@/api";
+import { handleRequest } from "@/helpers/request";
+
 import VipTableImage from "@/assets/images/common/vip-table.jpg";
 
 const router = useRouter();
 const userStore = useUserStore();
 const { userInfo, isLogin } = storeToRefs(userStore);
 
+const loadingMoney = ref(false);
+const loadingScore = ref(false);
 const showVipTable = ref(false);
 
 const withdrawLink = computed(() => {
@@ -21,6 +27,32 @@ const withdrawLink = computed(() => {
 const vipImgeSrc = computed(() => {
   return `/vip/vip${userInfo?.value?.vip ?? 1}.png`;
 });
+
+const loadMoney = () => {
+  loadingMoney.value = true;
+  handleRequest(axios.get(API.USER_INFO + "/" + "money"))
+    .then((res) => {
+      userStore.updateUserInfo({ money: res.data })
+    })
+    .finally(() => {
+      setTimeout(() => {
+        loadingMoney.value = false;
+      }, 500);
+    });
+};
+
+const loadScore = () => {
+  loadingScore.value = true;
+  handleRequest(axios.get(API.USER_INFO + "/" + "score"))
+    .then((res) => {
+       userStore.updateUserInfo({ score: res.data })
+    })
+    .finally(() => {
+      setTimeout(() => {
+        loadingScore.value = false;
+      }, 500);
+    });
+};
 </script>
 <template>
   <div class="mine page">
@@ -121,16 +153,28 @@ const vipImgeSrc = computed(() => {
             <span class="font-28 font-gray" style="font-size: 14px"
               >(100 Đ=100,000 VND)</span
             >
-            <div class="refresh-btn">
+            <div
+              class="refresh-btn"
+              :class="[
+                loadingMoney
+                  ? 'van-loading__spinner van-loading__spinner--circular'
+                  : '',
+              ]"
+              @click="loadMoney"
+            >
               <i class="van-icon van-icon-replay"></i>
             </div>
           </div>
           <div class="part-2">
-            <p class="balance van-ellipsis" style="font-size: 24px">100/100</p>
+            <p class="balance van-ellipsis" style="font-size: 24px"> {{ userInfo?.score }}/100</p>
             <span class="font-28 font-gray" style="font-size: 14px">
               Điểm tín nhiệm</span
             >
-            <div class="refresh-btn">
+            <div class="refresh-btn" :class="[
+                loadingScore
+                  ? 'van-loading__spinner van-loading__spinner--circular'
+                  : '',
+              ]" @click="loadScore">
               <i class="van-icon van-icon-replay"></i>
             </div>
           </div>

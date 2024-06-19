@@ -94,10 +94,10 @@ onRefresh();
                 >Trả tiền</span
               >
               <span v-else-if="item.status == 0">Chưa thanh toán</span>
-              <span style="color: rgb(7, 193, 96)" v-else
+              <span style="color: #ff253f" v-else
                 >Thanh toán thất bại</span
               >
-              <span>Số tiền：{{ formatNumber(item.amount) }}Đ</span>
+              <span>Số điểm: {{ formatNumber(item.amount) }}Đ</span>
             </div>
             <div class="desc">
               <span>Minh họa：{{ item.note }}</span>

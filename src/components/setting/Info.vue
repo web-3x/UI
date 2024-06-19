@@ -43,14 +43,14 @@ const { userInfo } = storeToRefs(userStore);
       <router-link to="/Setsex" class="item van-hairline--bottom">
         <div class="left">Giới tính</div>
         <div class="right">
-          <span class="desc">Không xác định</span
+          <span class="desc">{{ userInfo.gender == 1 ? 'Nam giới' : userInfo.gender == 2 ? 'Nữ giới' : 'Không xác định'}}</span
           ><i class="van-icon van-icon-arrow"></i>
         </div>
       </router-link>
       <router-link to="/Setbank" class="item van-hairline--bottom">
         <div class="left">Liên kết thông tin thẻ ngân hàng</div>
         <div class="right">
-          <span class="desc">Không có</span
+          <span class="desc">{{ userInfo.isSetBank ? 'Ràng buộc': 'Không có' }}</span
           ><i class="van-icon van-icon-arrow"></i>
         </div>
       </router-link>
