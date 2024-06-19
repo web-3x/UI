@@ -79,7 +79,7 @@ io.emit("join", id, (data) => {
 
 io.on("game-info", (data) => {
   const { name, session, end } = data;
-  Object.assign(gameInfo, { name, session, end });
+  Object.assign(gameInfo, { session, end });
   countDownTime.restart(end);
   getGameHistory();
 });
@@ -113,6 +113,8 @@ const GameInfo = () => {
     (res) => {
       if (res.success) {
         choices.value = res.data.info?.betOptions ?? []
+        gameInfo.name = res.data.info.name
+        console.log(res.data.info)
       }
     }
   )
