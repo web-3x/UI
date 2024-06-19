@@ -20,9 +20,9 @@ const type = ref("");
 const amount = Number(route.query.money);
 
 const bankInfo = reactive({
-  bankName: "bank",
-  accountNumber: "123456",
-  holder: "NGUYEN VAN A"
+  bankName: "",
+  accountNumber: "",
+  holder: ""
 })
 
 if (isNaN(amount) || amount <= 0) {
@@ -30,10 +30,11 @@ if (isNaN(amount) || amount <= 0) {
 }
 
 const submit = () => {
-
   handleRequest(axios.post(API.TRANSACTION_DEPOSIT, { amount, note: "ok" })).then(res => {
     if(res.success) {
       type.value = 'bank';
+      console.log(res.data.bank)
+      Object.assign(bankInfo, res.data.bank)
     } else {
       showFailToast(res.message ?? "Lỗi nạp tiền")
     }
