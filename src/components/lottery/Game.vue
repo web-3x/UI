@@ -3,6 +3,7 @@ import { ref } from "vue";
 import axios from "@/axios";
 import API from "@/api";
 import { handleRequest } from "@/helpers/request";
+import { girlRank} from "@/components/home/index.js";
 
 const games = ref([]);
 const getGameList = () => {
@@ -21,27 +22,27 @@ getGameList();
   <div class="convention-hall page">
     <div class="nav-bar van-nav-bar van-hairline--bottom">
       <div class="van-nav-bar__content">
-        <div class="van-nav-bar__title van-ellipsis">XẾP HẠNG</div>
+        <div class="van-nav-bar__title van-ellipsis">XẾP HẠNG IDOL</div>
       </div>
     </div>
     <div class="convention-item">
-      <div class="left">
-        <div class="van-sidebar">
-          <a class="van-sidebar-item van-sidebar-item--select"
-            ><div class="van-sidebar-item__text">Tất cả</div></a
-          >
-        </div>
-      </div>
+<!--      <div class="left">-->
+<!--        <div class="van-sidebar">-->
+<!--          <a class="van-sidebar-item van-sidebar-item&#45;&#45;select"-->
+<!--            ><div class="van-sidebar-item__text">Tất cả</div></a-->
+<!--          >-->
+<!--        </div>-->
+<!--      </div>-->
       <div class="right">
         <div class="list-wrapper van-pull-refresh">
           <div class="van-pull-refresh__track" style="transition-duration: 0ms">
             <div class="van-pull-refresh__head"></div>
             <div class="van-grid van-hairline--top">
               <router-link
-                v-for="(g, idx) in games"
+                v-for="(g, idx) in girlRank"
                 :key="idx"
-                :to="{ name: 'Lottery', query: { id: g.id } }"
                 class="van-grid-item"
+                :to="`/HomeDetail/${g.id}`"
                 style="flex-basis: 50%"
               >
                 <div
@@ -50,52 +51,46 @@ getGameList();
                   <div class="game_item_img van-image">
                     <img
                       class="van-image__img"
-                      src="@/assets/images/common/bgGirl.png"
+                      :src="g.img"
                     />
                   </div>
-                  <span>{{ g.name }}</span
+                  <span>TOP {{ idx+1 }}</span>
+                  <span> {{ g.name }}</span
                   ><span></span>
                 </div>
               </router-link>
-              <!-- <div class="van-grid-item" style="flex-basis: 50%">
-                <div
-                  class="van-grid-item__content van-grid-item__content--center van-hairline"
-                >
-                  <div class="game_item_img van-image">
-                    <img
-                      class="van-image__img"
-                      src="@/assets/images/common/bgGirl.png"
-                    />
-                  </div>
-                  <span>BỎ PHIẾU 2</span><span></span>
-                </div>
-              </div>
               <div class="van-grid-item" style="flex-basis: 50%">
                 <div
                   class="van-grid-item__content van-grid-item__content--center van-hairline"
                 >
-                  <div class="game_item_img van-image">
-                    <img
-                      class="van-image__img"
-                      src="@/assets/images/common/bgGirl.png"
-                    />
-                  </div>
-                  <span>BỎ PHIẾU 3</span><span></span>
                 </div>
               </div>
-              <div class="van-grid-item" style="flex-basis: 50%">
-                <div
-                  class="van-grid-item__content van-grid-item__content--center van-hairline"
-                >
-                  <div class="game_item_img van-image">
-                    <img
-                      class="van-image__img"
-                      src="@/assets/images/common/bgGirl.png"
-                    />
-                  </div>
-                  <span>ĐẶC BIỆT</span><span></span>
-                </div>
-              </div> -->
+<!--              <div class="van-grid-item" style="flex-basis: 50%">-->
+<!--                <div-->
+<!--                  class="van-grid-item__content van-grid-item__content&#45;&#45;center van-hairline"-->
+<!--                >-->
+<!--                  <div class="game_item_img van-image">-->
+<!--                    <img-->
+<!--                      class="van-image__img"-->
+<!--                      src="@/assets/images/common/bgGirl.png"-->
+<!--                    />-->
+<!--                  </div>-->
+<!--                  <span>BỎ PHIẾU 3</span><span></span>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div class="van-grid-item" style="flex-basis: 50%">-->
+<!--                <div-->
+<!--                  class="van-grid-item__content van-grid-item__content&#45;&#45;center van-hairline"-->
+<!--                >-->
+<!--                  <div class="game_item_img van-image">-->
+<!--                    <img-->
+<!--                      class="van-image__img"-->
+<!--                      src="@/assets/images/common/bgGirl.png"-->
+<!--                    />-->
+<!--                  </div>-->
+<!--                  <span>ĐẶC BIỆT</span><span></span>-->
+<!--                </div>-->
+<!--              </div>-->
             </div>
           </div>
         </div>

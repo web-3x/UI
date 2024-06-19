@@ -33,7 +33,7 @@ const name = listAddress.filter((add) => add.id === Number(idUrl))[0].name
            v-for="girl in currentAdd.data"
         >
           <van-image :src="girl.img_url[0]" />
-          <span class="rig-name">A01</span>
+          <span class="rig-name">{{girl.vn_vn}}</span>
         </van-grid-item>
       </van-grid>
     </div>

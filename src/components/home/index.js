@@ -15004,3 +15004,136 @@ export const detailGirls = [
 ]
 }
 ]
+
+export const girlRank = [
+    {
+        "id": 98,
+        "name": "EM NGỌC",
+        "img": "https://api.canalis.vip//xuanfei/20231028/62a5b51f5dc5e33149cfe8799a5bd864.jpg",
+        "price": "350",
+        "city_name": " Phú Nhuận",
+        "lat": "10.7987960000",
+        "lng": "106.6797670000",
+        "address": "Phan Đình Phùng, Phú Nhuận,Hồ Chí Minh, Vietnam",
+        "phone": "0823231219",
+        "birthday": "1993",
+        "comment_total": 45
+    },
+    {
+        "id": 81,
+        "name": "❤️ THÚY DIỄM ❤️",
+        "img": "https://api.canalis.vip//xuanfei/20230410/f5d2f44d538482e643ffca6604f06710.jpg",
+        "price": "200",
+        "city_name": " Phú Nhuận",
+        "lat": "10.7981110000",
+        "lng": "106.6795540000",
+        "address": "Phan Đình Phùng, Phú Nhuận,Hồ Chí Minh, Vietnam",
+        "phone": "0373605946",
+        "birthday": "1987",
+        "comment_total": 5
+    },
+    {
+        "id": 75,
+        "name": "ANH THƯ",
+        "img": "https://api.canalis.vip//xuanfei/20230412/cbabc0a7b2fa078bf83fc48d33b4e23d.jpg",
+        "price": "300",
+        "city_name": " Thủ Đức",
+        "lat": "10.8296950000",
+        "lng": "106.7304602000",
+        "address": "Đường 18, Thủ Đức,Hồ Chí Minh, Vietnam",
+        "phone": "0348615694",
+        "birthday": "1995",
+        "comment_total": 13
+    },
+    {
+        "id": 79,
+        "name": "✅ TUỆ VY ✅",
+        "img": "https://api.canalis.vip//xuanfei/20230410/d5e69b2231040918df3bff5857146bbd.jpg",
+        "price": "500",
+        "city_name": " Quận 2",
+        "lat": "10.7972745000",
+        "lng": "106.7305140000",
+        "address": "Đường số 19, Quận 2,Hồ Chí Minh, Vietnam",
+        "phone": "0983394021",
+        "birthday": "1992",
+        "comment_total": 7
+    },
+    {
+        "id": 73,
+        "name": "MIU MIU",
+        "img": "https://api.canalis.vip//xuanfei/20231029/986f38fc1bc0fb02be9fe05cd219e6da.jpg",
+        "price": "500",
+        "city_name": " Quận 8",
+        "lat": "10.7485650000",
+        "lng": "106.6871310000",
+        "address": "Dương Bá Trạc, Quận 8,Hồ Chí Minh, Vietnam",
+        "phone": "0353223236",
+        "birthday": "2001",
+        "comment_total": 2
+    },
+    {
+        "id": 85,
+        "name": "TÚ ANH",
+        "img": "https://api.canalis.vip//xuanfei/20230412/5c03364c2aaa74da2f1d777df996c2fa.jpg",
+        "price": "600",
+        "city_name": " Gò Vấp",
+        "lat": "10.8387051000",
+        "lng": "106.6497740000",
+        "address": "Quang Trung, Gò Vấp,Hồ Chí Minh, Vietnam",
+        "phone": "0352944838",
+        "birthday": "1992",
+        "comment_total": 152
+    },
+    {
+        "id": 68,
+        "name": "HẠNH DUNG",
+        "img": "https://api.canalis.vip//xuanfei/20230410/b134e2e4a1e27a8d4c5b43193342d140.jpg",
+        "price": "400",
+        "city_name": " Tân Phú",
+        "lat": "10.8002010000",
+        "lng": "106.6298440000",
+        "address": "Tân Sơn Nhì, Tân Phú,Hồ Chí Minh, Vietnam",
+        "phone": "0812667998",
+        "birthday": "1993",
+        "comment_total": 7
+    },
+    {
+        "id": 90,
+        "name": "TUỆ NHI",
+        "img": "https://api.canalis.vip//xuanfei/20230410/1f4f449e4460882e8aa45f371992d833.jpg",
+        "price": "600",
+        "city_name": " Phú Nhuận",
+        "lat": "10.7985638000",
+        "lng": "106.6877631000",
+        "address": "Phan Xích Long, Phú Nhuận,Hồ Chí Minh, Vietnam",
+        "phone": "0789588350",
+        "birthday": "1996",
+        "comment_total": 92
+    },
+    {
+        "id": 77,
+        "name": "Khánh Linh ❤️",
+        "img": "https://api.canalis.vip//xuanfei/20230410/cba299e4226feea00c46634bbd8eb7cd.jpg",
+        "price": "700",
+        "city_name": " Thủ Đức",
+        "lat": "10.8299050000",
+        "lng": "106.7305972000",
+        "address": "Đường 18, Thủ Đức,Hồ Chí Minh, Vietnam",
+        "phone": "0389126676",
+        "birthday": "2002",
+        "comment_total": 3
+    },
+    {
+        "id": 92,
+        "name": "LAN LY",
+        "img": "https://api.canalis.vip//xuanfei/20231028/a2c82caf252c5d10b41d2915114f6358.jpg",
+        "price": "350",
+        "city_name": " Gò Vấp",
+        "lat": "10.8476427000",
+        "lng": "106.6682653000",
+        "address": "Lê Đức Thọ, Gò Vấp,Hồ Chí Minh, Vietnam",
+        "phone": "0984620914",
+        "birthday": "1991",
+        "comment_total": 29
+    }
+]

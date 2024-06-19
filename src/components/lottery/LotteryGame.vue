@@ -7,7 +7,6 @@ import { formatNumber } from "@/helpers/format";
 import { useUserStore } from "@/store/user";
 import { storeToRefs } from "pinia";
 import { showFailToast } from "vant";
-import { Popup } from "vant";
 
 import axios from "@/axios";
 import API from "@/api";
