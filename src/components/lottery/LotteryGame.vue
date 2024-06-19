@@ -78,7 +78,8 @@ io.emit("join", id, (data) => {
 });
 
 io.on("game-info", (data) => {
-  const { name, session, end } = data;
+  const { name, session, countdown } = data;
+  const end = Date.now() + countdown * 1000
   Object.assign(gameInfo, { session, end });
   countDownTime.restart(end);
   getGameHistory();
@@ -246,12 +247,11 @@ GameInfo();
       ></div>
       <div class="recent" @click="showPopupRs">
         <div class="kuaisan-ball left" v-if="gameHistory[0]">
-          <span class="res-des middle">{{
-            formatResultText1(gameHistory[0]?.result)
+         
+          <span class="res-des middle" v-for="r, i in gameHistory[0].resultText ?? []" :key="i">{{
+            r
           }}</span
-          ><span class="res-des middle">{{
-            formatResultText2(gameHistory[0]?.result)
-          }}</span>
+          >
         </div>
         <i
           class="van-icon van-icon-arrow-down down"
@@ -386,11 +386,9 @@ GameInfo();
                       margin-left: 40%;
                     "
                   >
-                    <span class="res-des middle"
-                      >{{ formatResultText1(item.result) }} </span
-                    ><span class="res-des middle"
-                      >{{ formatResultText2(item.result) }}
-                    </span>
+                    <span class="res-des middle" v-for="r, i in item.resultText ?? []" :key="i"
+                      >{{ r }} </span
+                    >
                   </div>
                 </div>
               </div>
