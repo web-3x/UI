@@ -50,10 +50,10 @@ const gameInfo = reactive({
 });
 
 const choices = ref([
-  { id: "1", name: "IDOL 1", active: false },
-  { id: "2", name: "IDOL 2", active: false },
-  { id: "3", name: "IDOL 3", active: false },
-  { id: "4", name: "IDOL 4", active: false },
+  // { id: "1", name: "IDOL 1", active: false },
+  // { id: "2", name: "IDOL 2", active: false },
+  // { id: "3", name: "IDOL 3", active: false },
+  // { id: "4", name: "IDOL 4", active: false },
 ]);
 
 const choicesSelected = computed(() => {
@@ -89,8 +89,8 @@ onUnmounted(() => {
 });
 
 const toggleChoice = (id) => {
-  const idx = choices.value.findIndex(e => e.id === id);
-  if(idx === -1) return;
+  const idx = choices.value.findIndex((e) => e.id === id);
+  if (idx === -1) return;
   choices.value[idx].active = !choices.value[idx].active;
   if (!choices.value[idx].active) {
     choices.value[idx].amount = 0;
@@ -108,6 +108,16 @@ const getGameHistory = () => {
   );
 };
 
+const GameInfo = () => {
+  handleRequest(axios.get(API.GAME_INFO + "/" + id)).then(
+    (res) => {
+      if (res.success) {
+        choices.value = res.data.info?.betOptions ?? []
+      }
+    }
+  )
+};
+
 const confirmOrder = () => {
   if (choicesSelected.value.length === 0) {
     return showFailToast("Hãy chọn 1 con số");
@@ -122,10 +132,10 @@ const confirmOrder = () => {
 
 const cancelOrder = () => {
   choices.value.forEach((c) => {
-    c.active = false
+    c.active = false;
   });
-  amount.value = ""
-}
+  amount.value = "";
+};
 
 const submit = () => {
   const data = {
@@ -193,6 +203,9 @@ const formatResultText2 = (r) => {
   }, 0);
   return s % 2 ? "IDOL 3" : "IDOL 4";
 };
+
+GameInfo();
+
 </script>
 <template>
   <div class="container page">
@@ -385,32 +398,45 @@ const formatResultText2 = (r) => {
       </van-popup>
     </div>
   </div>
-    <van-popup v-model:show="isShowConfirmOrder">
-      <div class="confirm-order-modal">
-        <div class="head van-hairline--bottom">
-          <p class="text" style="margin: 1em">Bình chọn</p>
-        </div>
-        <ul class="list">
-          <li
-            class="lise-item van-hairline--bottom"
-            v-for="(item, index) in choicesSelected"
-            :key="index"
-          >
-            <div class="main">
-              <p class="bet-name">{{ item.name }}</p>
-              <p class="detail-text">
-                1ĐặtX{{ item.amount }}Đ={{ item.amount }}Đ
-              </p>
-            </div>
-            <van-icon name="close" @click="toggleChoice(item.id)"/>
-          </li>
-        </ul>
-        <div class="sub-bar">
-          <van-button type="default" class="item cancel-btn" color="#979799" plain @click="cancelOrder">Hủy bình chọn</van-button>
-          <van-button type="default" class="item" color='linear-gradient(270deg, #c24491, #775fd9)' @click="submit">Xác nhận</van-button>
-        </div>
+  <van-popup v-model:show="isShowConfirmOrder">
+    <div class="confirm-order-modal">
+      <div class="head van-hairline--bottom">
+        <p class="text" style="margin: 1em">Bình chọn</p>
       </div>
-    </van-popup>
+      <ul class="list">
+        <li
+          class="lise-item van-hairline--bottom"
+          v-for="(item, index) in choicesSelected"
+          :key="index"
+        >
+          <div class="main">
+            <p class="bet-name">{{ item.name }}</p>
+            <p class="detail-text">
+              1ĐặtX{{ item.amount }}Đ={{ item.amount }}Đ
+            </p>
+          </div>
+          <van-icon name="close" @click="toggleChoice(item.id)" />
+        </li>
+      </ul>
+      <div class="sub-bar">
+        <van-button
+          type="default"
+          class="item cancel-btn"
+          color="#979799"
+          plain
+          @click="cancelOrder"
+          >Hủy bình chọn</van-button
+        >
+        <van-button
+          type="default"
+          class="item"
+          color="linear-gradient(270deg, #c24491, #775fd9)"
+          @click="submit"
+          >Xác nhận</van-button
+        >
+      </div>
+    </div>
+  </van-popup>
 </template>
 <style scoped>
 .van-cell {
@@ -452,5 +478,4 @@ const formatResultText2 = (r) => {
 .cancel-btn :deep(.van-button__text) {
   color: currentColor !important;
 }
-
 </style>
