@@ -19,6 +19,10 @@ const formData = reactive({
   password_withdraw: "",
 });
 
+const clickAll = () => {
+  formData.amount = userInfo.value.money ?? 0
+}
+
 const submit = () => {
   if (isNaN(formData.amount) || formData.amount <= 0) {
    return showFailToast("Vui lòng điền số điểm chính xác.");
@@ -73,7 +77,7 @@ const submit = () => {
               </div>
             </div>
           </div>
-          <span class="all">Tất cả</span>
+          <span class="all" @click="clickAll">Tất cả</span>
         </div>
         <div class="money" style="width: 100%">
           <div class="moneyNumber" style="width: 100%">
@@ -104,7 +108,7 @@ const submit = () => {
             </span>
           </div>
           <div class="balance">
-            <span>VND：</span><span class="number">1000Đ</span>
+            <span>VND：</span><span class="number">{{ formatNumber(userInfo.money) }}Đ</span>
           </div>
         </div>
       </div>
