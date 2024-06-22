@@ -40,6 +40,9 @@ export default {
   // order
   ORDER_HISTORY: "order/history",
   ORDER: "/order",
-  ORDER_DATE_PROFIT: "/order/date-profit"
+  ORDER_DATE_PROFIT: "/order/date-profit",
+
+  // notification
+  NOTIFICATION_LIST: "/notification/history"
 
 };
