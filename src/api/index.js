@@ -43,6 +43,7 @@ export default {
   ORDER_DATE_PROFIT: "/order/date-profit",
 
   // notification
-  NOTIFICATION_LIST: "/notification/history"
-
+  NOTIFICATION_LIST: "/notification/history",
+  NOTIFICATION_UNREAD: "/notification/un-read",
+  NOTIFICATION_READ: "/notification/read",
 };

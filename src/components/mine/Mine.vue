@@ -19,6 +19,7 @@ const { userInfo, isLogin } = storeToRefs(userStore);
 const loadingMoney = ref(false);
 const loadingScore = ref(false);
 const showVipTable = ref(false);
+const countNotify = ref(0);
 
 const withdrawLink = computed(() => {
   return userInfo?.value?.isSetBank ? "/withdraw" : "/Setbank";
@@ -53,6 +54,18 @@ const loadScore = () => {
       }, 500);
     });
 };
+
+const getUnreadNotifications = () => {
+  handleRequest(axios.get(API.NOTIFICATION_UNREAD))
+    .then((res) => {
+      if(res.success) {
+        countNotify.value = res.data;
+      }
+    })
+};
+
+getUnreadNotifications();
+
 </script>
 <template>
   <div class="mine page">
@@ -221,6 +234,9 @@ const loadScore = () => {
               />
             </div>
             <span class="menu-item-label">Thông báo</span>
+            <van-tag :show="countNotify" size="large" type="danger" style="font-size: 14px; padding: 5px;" round>
+              {{ countNotify }}
+            </van-tag>
           </router-link>
           <div
             class="menu-item"

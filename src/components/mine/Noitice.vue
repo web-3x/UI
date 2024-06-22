@@ -47,6 +47,15 @@ const getData = async () => {
   return [];
 };
 
+const read = async (idx) => {
+  const id = list.value[idx]?._id;
+  if (!id) return;
+  const res = await handleRequest(axios.get(API.NOTIFICATION_READ + "/" + id));
+  if (res.success) {
+    list.value[idx].read = 1;
+  }
+};
+
 onRefresh();
 </script>
 
@@ -84,10 +93,27 @@ onRefresh();
           finished-text=""
           @load="onLoad"
         >
-          <div v-for="item in list" :key="item" class="listItem">
+          <div v-for="(item, index) in list" :key="index" class="listItem">
             <div class="listTitle">{{ item.title }}</div>
             <div class="listContent html">
               <p v-html="item.content"></p>
+              <div style="text-align: right" v-if="!item.read">
+                <van-tag
+                  :show="countNotify"
+                  round
+                  size="large"
+                  type="warning"
+                  style="
+                    font-size: 14px;
+                    padding: 5px;
+                    margin: 8px 0;
+                    cursor: pointer;
+                  "
+                  @click="read(index)"
+                >
+                  Đánh dấu đã đọc
+                </van-tag>
+              </div>
             </div>
             <div class="listTime">
               <div class="listTimeText">
