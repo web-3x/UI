@@ -34,7 +34,7 @@ const submit = () => {
           </div>
           <div class="van-nav-bar__title van-ellipsis">NẠP ĐIỂM</div>
           <router-link to="/RechargeRecord" class="van-nav-bar__right">
-            <span class="nav-right">Lịch sử quy đổi điểm</span>
+            <span class="nav-right" style="font-size: 3.5vw;">Lịch sử quy đổi điểm</span>
           </router-link>
         </div>
       </div>
