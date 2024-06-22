@@ -86,9 +86,13 @@ onRefresh();
         >
           <div v-for="item in list" :key="item" class="listItem">
             <div class="listTitle">{{ item.title }}</div>
-            <div class="listContent html" v-html="item.content"></div>
+            <div class="listContent html">
+              <p v-html="item.content"></p>
+            </div>
             <div class="listTime">
-              <div class="listTimeText">{{ formatDateTime(item.createdAt) }}</div>
+              <div class="listTimeText">
+                {{ formatDateTime(item.createdAt) }}
+              </div>
             </div>
           </div>
         </van-list>
