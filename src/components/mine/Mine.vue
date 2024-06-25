@@ -123,6 +123,9 @@ getUnreadNotifications();
                     "
                   ></span>
                 </div>
+                <div style="color: white; margin-top: 10px; text-wrap: nowrap;">
+                  Mã thành viên: {{ userInfo.memberCode ?? "********"}}
+                </div>
               </div>
             </div>
           </template>
