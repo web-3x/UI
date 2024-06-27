@@ -289,7 +289,7 @@ a {
 }
 
 .member-code {
-  font-size: 16px;
+  /* font-size: 16px; */
   color: white;
   text-shadow: 0 0 5px #ffa600, 0 0 5px #ffa600;
 }
