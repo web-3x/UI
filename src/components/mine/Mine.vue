@@ -33,7 +33,7 @@ const loadMoney = () => {
   loadingMoney.value = true;
   handleRequest(axios.get(API.USER_INFO + "/" + "money"))
     .then((res) => {
-      userStore.updateUserInfo({ money: res.data })
+      userStore.updateUserInfo({ money: res.data });
     })
     .finally(() => {
       setTimeout(() => {
@@ -46,7 +46,7 @@ const loadScore = () => {
   loadingScore.value = true;
   handleRequest(axios.get(API.USER_INFO + "/" + "score"))
     .then((res) => {
-       userStore.updateUserInfo({ score: res.data })
+      userStore.updateUserInfo({ score: res.data });
     })
     .finally(() => {
       setTimeout(() => {
@@ -56,16 +56,14 @@ const loadScore = () => {
 };
 
 const getUnreadNotifications = () => {
-  handleRequest(axios.get(API.NOTIFICATION_UNREAD))
-    .then((res) => {
-      if(res.success) {
-        countNotify.value = res.data;
-      }
-    })
+  handleRequest(axios.get(API.NOTIFICATION_UNREAD)).then((res) => {
+    if (res.success) {
+      countNotify.value = res.data;
+    }
+  });
 };
 
 getUnreadNotifications();
-
 </script>
 <template>
   <div class="mine page">
@@ -100,7 +98,7 @@ getUnreadNotifications();
               />
             </div>
             <div class="login-content">
-              <p class="login-btn" style="margin: 19.1833px 0">
+              <p class="login-btn" style="margin: 0">
                 {{ userInfo?.username }}
                 <img
                   @click="showVipTable = true"
@@ -123,8 +121,11 @@ getUnreadNotifications();
                     "
                   ></span>
                 </div>
-                <div style="color: white; margin-top: 10px; text-wrap: nowrap;">
-                  Mã thành viên: {{ userInfo.memberCode ?? "********"}}
+                <div style="color: white; margin-top: 10px; text-wrap: nowrap">
+                  Mã thành viên:
+                  <span class="member-code">{{
+                    userInfo.memberCode ?? "********"
+                  }}</span>
                 </div>
               </div>
             </div>
@@ -182,15 +183,21 @@ getUnreadNotifications();
             </div>
           </div>
           <div class="part-2">
-            <p class="balance van-ellipsis" style="font-size: 24px"> {{ userInfo?.score }}/100</p>
+            <p class="balance van-ellipsis" style="font-size: 24px">
+              {{ userInfo?.score }}/100
+            </p>
             <span class="font-28 font-gray" style="font-size: 14px">
               Điểm tín nhiệm</span
             >
-            <div class="refresh-btn" :class="[
+            <div
+              class="refresh-btn"
+              :class="[
                 loadingScore
                   ? 'van-loading__spinner van-loading__spinner--circular'
                   : '',
-              ]" @click="loadScore">
+              ]"
+              @click="loadScore"
+            >
               <i class="van-icon van-icon-replay"></i>
             </div>
           </div>
@@ -237,7 +244,13 @@ getUnreadNotifications();
               />
             </div>
             <span class="menu-item-label">Thông báo</span>
-            <van-tag :show="countNotify" size="large" type="danger" style="font-size: 14px; padding: 5px;" round>
+            <van-tag
+              :show="countNotify"
+              size="large"
+              type="danger"
+              style="font-size: 14px; padding: 5px"
+              round
+            >
               {{ countNotify }}
             </van-tag>
           </router-link>
@@ -273,5 +286,11 @@ a {
 
 :deep(.van-image-preview__overlay) {
   background: rgba(0, 0, 0, 0.9);
+}
+
+.member-code {
+  font-size: 16px;
+  color: white;
+  text-shadow: 0 0 5px #ffa600, 0 0 5px #ffa600;
 }
 </style>

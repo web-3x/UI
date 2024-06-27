@@ -828,7 +828,7 @@ body .van-toast .van-toast__icon {
   width: 18.933vw;
   height: 6vw;
   margin-left: 0;
-  margin-bottom: -1.6vw;
+  /* margin-bottom: -1.6vw; */
 }
 
 /* .page {
