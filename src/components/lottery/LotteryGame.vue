@@ -155,6 +155,7 @@ const submit = () => {
       amount.value = 0;
       choices.value.forEach((e) => (e.active = 0));
       isShowConfirmOrder.value = false;
+      userStore.updateUserInfo({ money: res.balance });
     } else {
       showFailToast(res.message ?? "Lỗi bình chọn");
     }
